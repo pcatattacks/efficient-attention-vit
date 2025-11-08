@@ -2,7 +2,9 @@
 
 **CS 5787 – Deep Learning**
 **Students:** Pranav Dhingra, Shashank Ramachandran
+
 **NetIDs:** pd453, sr2433
+
 **Emails:** pd453@cornell.edu, sr2433@cornell.edu
 
 ## Papers Chosen
@@ -40,7 +42,7 @@ Our study will focus on both computational performance and classification accura
 - We will also explore a hybrid attention mechanism that integrates **atrous (dilated) attention** — inspired by ACC-ViT — to reduce computation while maintaining receptive field coverage.
   - This hybrid will be tested under similar conditions for fair comparison.
 
-### Metrics
+## Metrics
 
 - **Training and inference time per epoch**
 - **GPU memory usage**
