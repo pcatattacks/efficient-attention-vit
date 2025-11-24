@@ -1,4 +1,4 @@
-# Effici## 🎯 Project Overview
+# Efficient Attention in Vision Transformers
 
 This project implements Vision Transformers from scratch and provides a framework for comparing different attention mechanisms. The goal is to empirically evaluate the trade-offs between computational efficiency and model performance on image classification tasks, specifically comparing standard attention with efficient alternatives like Linformer, Performer, and Nyströmformer.
 
@@ -317,7 +317,7 @@ class HybridAttention(nn.Module):
 - **Challenge**: Where efficiency gains become meaningful
 
 #### Phase 3: Comprehensive Evaluation 📊
-- **Metrics**: Training time, inference latency, memory usage, FLOPs
+- **Metrics**: Training time, inference latency, memory usage, FLOPs`
 - **Analysis**: Trade-off curves between efficiency and accuracy
 - **Visualization**: Attention pattern analysis across mechanisms
 
