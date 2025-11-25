@@ -7,6 +7,7 @@ import torchvision
 import torchvision.transforms as transforms
 import time  # NEW
 from vit import ViTForClassfication
+import pandas as pd
 
 
 def topk_accuracies(logits, labels, topk=(1,)):
@@ -161,14 +162,14 @@ def save_summary_dataframe(
     inference_latency_ms,
     flops,
     output_dir=".",           # NEW
+    config=None,              # NEW
 ):
-    
     final_train_loss = train_losses[-1]
     final_test_loss = test_losses[-1]
     final_top1 = top1_accuracies[-1]
     final_top5 = top5_accuracies[-1]
 
-    df = pd.DataFrame([{
+    row = {
         "experiment": exp_name,
         "params": param_count,
         "flops_macs": flops,
@@ -181,7 +182,14 @@ def save_summary_dataframe(
         "peak_memory_mb": max([m for m in peak_memories if m is not None] or [None]),
         "inference_latency_mean_ms": inference_latency_ms["mean"],
         "inference_latency_std_ms": inference_latency_ms["std"],
-    }])
+    }
+
+    if config is not None:
+        row["attention_type"] = config.get("attention_type")
+        row["patch_size"] = config.get("patch_size")
+        row["linformer_k"] = config.get("linformer_k")
+
+    df = pd.DataFrame([row])
 
     results_root = os.path.join(output_dir, "results")
     os.makedirs(results_root, exist_ok=True)
@@ -190,6 +198,7 @@ def save_summary_dataframe(
     print(f"\nSaved summary DataFrame → {outfile}")
 
     return df
+
 
 
 def load_experiment(experiment_name, checkpoint_name="model_final.pt", base_dir="experiments"):
