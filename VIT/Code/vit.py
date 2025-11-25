@@ -244,12 +244,13 @@ class Block(nn.Module):
     def __init__(self, config):
         super().__init__()
 
+        use_faster_attention = config.get("use_faster_attention", False)
         attention_type = config.get("attention_type", "standard")
         # "standard", "linformer", "performer", "nystromformer", "faster"
         if attention_type == "faster":
             self.attention = FasterMultiHeadAttention(config)
-        elif self.attention_type == "linformer":
-            if self.use_faster_attention:
+        elif attention_type == "linformer":
+            if use_faster_attention:
                 # ★ Fused QKV + Linformer sequence projections
                 self.attention = LinformerFasterMultiHeadAttention(config)
             else:

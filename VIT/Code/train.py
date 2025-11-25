@@ -38,7 +38,7 @@ config = {
     "num_channels": 3,
     "qkv_bias": True,
     "use_faster_attention": True,
-    "attention_type": "nystromformer",  # "standard", "linformer", "performer", "nystromformer", "faster"
+    "attention_type": "linformer",  # "standard", "linformer", "performer", "nystromformer", "faster"
     # linformer specific
     "linformer_k": 256,
     # nystromformer specific
@@ -328,7 +328,7 @@ def main():
         config["image_size"] = 32
         config["num_classes"] = 10
 
-    elif args.dataset == "imagenette":
+    elif args.dataset == "imagenette": # TODO - wrong spelling, it's ImageNet 
         if args.data_root is None:
             raise ValueError("Must provide --data-root when using Imagenette.")
 
