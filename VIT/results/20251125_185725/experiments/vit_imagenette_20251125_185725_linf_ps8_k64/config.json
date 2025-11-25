@@ -1,0 +1,18 @@
+{
+    "attention_probs_dropout_prob": 0.1,
+    "attention_type": "linformer",
+    "hidden_dropout_prob": 0.1,
+    "hidden_size": 192,
+    "image_size": 160,
+    "initializer_range": 0.02,
+    "intermediate_size": 768,
+    "linformer_k": 64,
+    "num_attention_heads": 3,
+    "num_channels": 3,
+    "num_classes": 10,
+    "num_hidden_layers": 8,
+    "patch_size": 8,
+    "qkv_bias": true,
+    "seq_len": 401,
+    "use_faster_attention": true
+}

@@ -3,7 +3,7 @@
 1. Load ImageNet-100 dataset
     1. write utility functions for plotting an image for sanity checking the dataset
     2. utility functions for normalizing / denormalizing image - make a log of the preprocessing steps involved for the pretrained vision transformer, so we can undo the preprocessing to visualize the image.
-2. Load Vision Transformer backbone from HuggingFace / Pytorch
+2. Implement the base implementation of the VIT BACKBONE 
 3. Set up fine-tuning pipeline:
     1. Write fine tuning training loop (reusable function with different models able to be fed in)
     2. Write model evaluation functions for:
