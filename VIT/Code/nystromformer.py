@@ -70,9 +70,9 @@ class NystromformerAttention(nn.Module):
             Q_landmarks = Q.reshape(-1, self.num_attention_heads, self.num_landmarks, sequence_length // self.num_landmarks, self.attention_head_size).mean(dim = -2)
             K_landmarks = K.reshape(-1, self.num_attention_heads, self.num_landmarks, sequence_length // self.num_landmarks, self.attention_head_size).mean(dim = -2)
 
-            kernel_1 = F.softmax(torch.matmul(Q, K_landmarks.transpose(-1, -2)), dim = -1)
-            kernel_2 = F.softmax(torch.matmul(Q_landmarks, K_landmarks.transpose(-1, -2)), dim = -1)
-            kernel_3 = F.softmax(torch.matmul(Q_landmarks, K.transpose(-1, -2)), dim = -1)
+            kernel_1 = F.softmax(torch.matmul(Q, K_landmarks.transpose(-1, -2)) / math.sqrt(self.attention_head_size), dim = -1)
+            kernel_2 = F.softmax(torch.matmul(Q_landmarks, K_landmarks.transpose(-1, -2)) / math.sqrt(self.attention_head_size), dim = -1)
+            kernel_3 = F.softmax(torch.matmul(Q_landmarks, K.transpose(-1, -2)) / math.sqrt(self.attention_head_size), dim = -1)
             X = torch.matmul(torch.matmul(kernel_1, self.iterative_inv(kernel_2)), torch.matmul(kernel_3, V))
 
             # Remove padding from output
