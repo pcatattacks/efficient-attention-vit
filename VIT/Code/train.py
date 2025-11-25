@@ -3,6 +3,9 @@ from torch import nn, optim
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
+import time
+import argparse
+from tqdm.auto import tqdm
 from utils import (
     save_experiment,
     save_checkpoint,
@@ -15,8 +18,6 @@ from utils import (
 
 from data import prepare_data_imagenette, prepare_data_cifar10
 from vit import ViTForClassfication
-import time
-import argparse
 
 
 # ---------------------------
@@ -37,8 +38,16 @@ config = {
     "num_channels": 3,
     "qkv_bias": True,
     "use_faster_attention": True,
-    "attention_type": "linformer",
+    "attention_type": "nystromformer",  # "standard", "linformer", "performer", "nystromformer", "faster"
+    # linformer specific
     "linformer_k": 256,
+    # nystromformer specific
+    "num_landmarks": 16,
+    "max_seq_len": (32 // 4) * (32 // 4),  # (image_size / patch_size) ** 2
+    "conv_kernel_size": 33
+    # Performer specific - TODO
+
+    # Hybrid specific - TODO
 }
 
 
@@ -84,7 +93,7 @@ class Trainer:
         epochs_no_improve = 0
         min_delta = 1e-4  # minimum improvement to reset patience
 
-        for i in range(epochs):
+        for i in tqdm(range(epochs), desc="Training epochs"):
             # reset peak memory stats per epoch if on CUDA
             if str(self.device).startswith("cuda"):
                 torch.cuda.reset_peak_memory_stats(self.device)
