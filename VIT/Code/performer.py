@@ -30,6 +30,7 @@ class PerformerAttention(nn.Module):
         # Create a linear layer to project the query, key, and value
         all_head_size = self.num_attention_heads * self.head_dim
         self.qkv_projection = nn.Linear(self.hidden_size, all_head_size * 3, bias=self.qkv_bias)
+        self.output_dropout = nn.Dropout(config["hidden_dropout_prob"])
 
     def forward(self, x, output_attentions=False):
         qkv = self.qkv_projection(x)
@@ -52,7 +53,7 @@ class PerformerAttention(nn.Module):
         attn_output = attn_output.transpose(1, 2).contiguous()
         attn_output = attn_output.view(batch_size, sequence_length, self.hidden_size)
         
-        return attn_output, None  # No attention weights returned
+        return self.output_dropout(attn_output), None  # No attention weights returned
 
     def extra_repr(self):
         return f'rp_dim={self.rp_dim}, kernel_type={self.kernel_type}'
