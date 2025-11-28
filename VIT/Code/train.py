@@ -38,15 +38,16 @@ config = {
     "num_channels": 3,
     "qkv_bias": True,
     "use_faster_attention": True,
-    "attention_type": "linformer",  # "standard", "linformer", "performer", "nystromformer", "faster"
+    "attention_type": "performer",  # "standard", "linformer", "performer", "nystromformer", "faster"
     # linformer specific
     "linformer_k": 256,
     # nystromformer specific
     "num_landmarks": 16,
     "max_seq_len": (32 // 4) * (32 // 4),  # (image_size / patch_size) ** 2
-    "conv_kernel_size": 33
+    "conv_kernel_size": 33,
     # Performer specific - TODO
-
+    "kernel_type": "relu", # "relu" or "exp"
+    "rp_dim": 64,
     # Hybrid specific - TODO
 }
 
